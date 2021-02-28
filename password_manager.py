@@ -47,7 +47,30 @@ def signingIn():
 
 # Creating a new account
 def newacc():
-    print()
+    global newuser
+    global newpass
+    while True:
+        newuser = input("Please enter a username: \n")
+        if newuser == "":
+            print("Please enter something")
+        else:
+            user.append(newuser)
+            break
+
+    while True:
+        newpass = input("Please make a password that is 8 letters long, 1 capital letter and a number. \n")
+        if newpass.isnumeric() == False:
+            print("Please have a number")
+        elif len(newpass) < 8:
+            print("Please make sure your password is 8 letters long.")
+        elif newpass.upper() == False:
+            print("Please have a captial letter")
+        else:
+            print("good")
+            break
+
+
+
 
 # Logging into an existing user. First loops for username, second loop is for the password
 def existingacc():
