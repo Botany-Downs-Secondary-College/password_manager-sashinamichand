@@ -6,8 +6,10 @@ import sys
 # Variables and Lists I will use
 name = ""
 age = ""
-user = ["sashin",]
-password = ["Helloyou123", ]
+user = ""
+password = ""
+member = {"user": "sashin", 
+          "password": "Helloyou123"}
 
 # Asks the user their age and name
 def question():
@@ -47,7 +49,23 @@ def signingIn():
 
 # Creating a new account
 def newacc():
-    print()
+    global newuser
+    global newpassword
+    while True:
+        newuser = input("Enter a username: \n")
+        if newuser == "":
+            print("Please enter something")
+        elif newuser in member["user"]:
+            print("This user already exists, please choose a new one.")
+        else:
+            break
+    while True:
+        newpassword = input("Enter a password. The password MUST have 7 letters, 1 captial letter and a number: \n").strip()
+        if (any(passreqs.isupper() for passreqs in newpassword)
+            and any(passreqs.isdigit() for passreqs in newpassword) and len(newpassword) >= 8) :
+            member["password"] = newpassword
+            print("Account was created!")
+            loggedin() 
 
 # Logging into an existing user. First loops for username, second loop is for the password
 def existingacc():
@@ -57,22 +75,23 @@ def existingacc():
         e_username = input("Enter your username: \n")
         if e_username == "":
             print("Please enter something")
-        elif e_username in user: 
+        elif e_username in member["user"]: 
             break
         else:
             print("Enter a valid user")
     while True:
         e_password = input("Please enter your password: \n") 
-        if e_password == "":
-            print("Please enter something.")
-        elif e_password in password:
-            print("Welcome user")
+        if e_password in member['password']:
+            print("Access granted!")
             loggedin()
         else:
-            print("Please type a valid password")
+            print("Wrong password")
+        #else:
+         #   print("Please type a valid password")
 
 def loggedin():
     print("hi")
+    print(member)
     exit()
 
 # INTRODUCTION
