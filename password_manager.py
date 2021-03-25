@@ -6,8 +6,6 @@ import sys
 # Variables and Lists I will use
 name = ""
 age = ""
-user = ""
-password = ""
 member = {"user": "sashin", 
           "password": "Helloyou123"}
 
@@ -55,9 +53,10 @@ def newacc():
         newuser = input("Enter a username: \n")
         if newuser == "":
             print("Please enter something")
-        elif newuser in member["user"]:
+        elif newuser in member.values():
             print("This user already exists, please choose a new one.")
         else:
+            member["user"] = newuser
             break
     while True:
         newpassword = input("Enter a password. The password MUST have 7 letters, 1 captial letter and a number: \n").strip()
