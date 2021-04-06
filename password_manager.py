@@ -10,6 +10,7 @@ user = ""
 password = ""
 member = {"user": "sashin", 
           "password": "Helloyou123"}
+passentry = ""
 
 # Asks the user their age and name
 def question():
@@ -90,8 +91,24 @@ def existingacc():
          #   print("Please type a valid password")
 
 def loggedin():
-    print("hi")
-    print(member)
+    global entry
+    entry = input("If you wish to save a new password, type 'p'. If you want to view your passwords type 'v'. \n")
+    if entry == "p":
+        enter_password()
+    elif entry == "v":
+        print(passentry)
+    else:
+        print("Make sure to only type p")
+
+def enter_password():
+    global newpass
+    newpass = input("Enter your password you wish to save: \n")
+    if newpass == "":
+        print("Please type something")
+    else:
+        print(Password saved, enter a new )
+
+    
     exit()
 
 # INTRODUCTION
