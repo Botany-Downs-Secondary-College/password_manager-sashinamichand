@@ -91,6 +91,7 @@ def existingacc():
         else:
             print("Wrong password")
 
+# Asks the user what they what to do or if they wish to view their passwords and the user can also exit
 def loggedin():
     while True:
         global choice
@@ -104,6 +105,7 @@ def loggedin():
         else:
             print("Make sure to only type p")
 
+# A loop that allows the user to enter their passwords
 def enter_password():
     while True:
         global appuser
@@ -133,6 +135,7 @@ def enter_password():
                 passentry.append(appPass)
                 print("Password saved, enter any more passwords you wish." )    
                 enter_password()
+                
 # INTRODUCTION
 # Informs the user about the program
 print("Hello there! This program is designed for you to store your passwords and users.\
