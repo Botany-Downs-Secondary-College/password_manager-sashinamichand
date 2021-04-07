@@ -10,7 +10,9 @@ user = ""
 password = ""
 member = {"user": "sashin", 
           "password": "Helloyou123"}
-passentry = ""
+app = ["Codeavengers", ]
+userentry = ["sashin123",]
+passentry = ["hi",]
 
 # Asks the user their age and name
 def question():
@@ -88,30 +90,49 @@ def existingacc():
             loggedin()
         else:
             print("Wrong password")
-        #else:
-         #   print("Please type a valid password")
 
 def loggedin():
-    global entry
-    entry = input("If you wish to save a new password, type 'p'. If you want to view your passwords type 'v'. \n")
-    if entry == "p":
-        enter_password()
-    elif entry == "v":
-        print(passentry)
-    else:
-        print("Make sure to only type p")
+    while True:
+        global choice
+        choice = input("If you wish to save a new password, type 'p'. If you want to view your passwords type 'v'. Lastly if you are done type 'e'. \n")
+        if choice == "p":
+            enter_password()
+        elif choice == "v":
+            print("The app names are: {}. The user for them are: {} The password for them are: {}." .format(app, userentry, passentry))
+        elif choice == "e":
+            exit()
+        else:
+            print("Make sure to only type p")
 
 def enter_password():
-    global newpass
-    newpass = input("Enter your password you wish to save: \n")
-    if newpass == "":
-        print("Please type something")
-    else:
-        print(Password saved, enter a new )
-
-    
-    exit()
-
+    while True:
+        global appuser
+        global appname
+        global appPass
+        while True: 
+            appname = input("Enter the apps name you wish to save, if you are finished type 'f': \n")
+            if appname == "":
+              print("Please type something")
+            elif appname ==  "f":
+                loggedin()
+            else:
+                app.append(appname)
+                break
+        while True:
+            appuser = input("Enter the user for the app you wish to save, and press 'f' if you are done: \n")
+            if appuser == "":
+              print("Please type something")
+            else:
+                userentry.append(appuser)
+                break
+        while True:
+            appPass = input("Enter your password you wish to save, and press 'f' if you are done: \n")
+            if appPass == "":
+                print("Please type something")
+            else:
+                passentry.append(appPass)
+                print("Password saved, enter any more passwords you wish." )    
+                enter_password()
 # INTRODUCTION
 # Informs the user about the program
 print("Hello there! This program is designed for you to store your passwords and users.\
