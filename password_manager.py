@@ -6,138 +6,139 @@ import sys
 # Variables and Lists I will use
 name = ""
 age = ""
+login = ""
 user = ""
 password = ""
+i = 0
 member = {"user": "sashin", 
           "password": "Helloyou123"}
 app = ["Codeavengers", ]
 userentry = ["sashin123",]
 passentry = ["hi",]
 
-# Asks the user their age and name
-def question():
-    while True:
-        global name
-        name = input("What is your name?\n")
-        if name == "":
-            print("Please type something")
-        else:
-            break
-    while True:      
-        try:
-            global age
-            age = float(input("How old are you?\n").strip())
-            if age < 13:
-                print("Sorry you are too young.")
-                break
-            else:
-                print("You are old enough {}." .format(name))
-                signingIn()
-        except ValueError: 
-            print("Please only type a number")
-          
-# LOGGING IN 
-# Asks if the user wishes to log in or create an account
-def signingIn():
-    while True:
-        global login
-        login = input("{}, do you have an existing account or do you want to create a new one? If it is a new one type 'n', if an existing account type 'e'.\n".format(name))
-        login = login.lower()
-        if login == "n":
-            newacc()
-        elif login == "e":
-            existingacc()
-        else:
-            print("Please type either n or e.")
+# Checks to make sure user is of age and that they typed their name
+def check(name, age):
+    if name == "":
+        print("Please type a name")
+        return()
+    if age < 13:
+        print("Sorry you are too young.")
+        exit()
+    else:
+        print("You are old enough {}." .format(name))
+        return()
 
-# Creating a new account
-def newacc():
-    global newuser
-    global newpassword
-    while True:
-        newuser = input("Enter a username: \n")
-        if newuser == "":
-            print("Please enter something")
-        elif newuser in member.values():
-            print("This user already exists, please choose a new one.")
-        else:
-            member["user"] = newuser
-            break
-    while True:
-        newpassword = input("Enter a password. The password MUST have 7 letters, 1 captial letter and a number: \n").strip()
-        if (any(passreqs.isupper() for passreqs in newpassword)
-            and any(passreqs.isdigit() for passreqs in newpassword) and len(newpassword) >= 8) :
-            member["password"] = newpassword
-            print("Account was created!")
-            loggedin() 
+# Checks to make sure new account meets the requirements
+def newacc(newuser, newpassword):
+    global tempPass
+    tempPass = newpassword.lower()
 
-# Logging into an existing user. First loops for username, second loop is for the password
-def existingacc():
-    global e_username
-    global e_password
-    while True:
-        e_username = input("Enter your username: \n")
-        if e_username == "":
-            print("Please enter something")
-        elif e_username in member["user"]: 
-            break
-        else:
-            print("Enter a valid user")
-    while True:
-        e_password = input("Please enter your password: \n") 
-        if e_password in member['password']:
-            print("Access granted!")
-            loggedin()
-        else:
-            print("Wrong password")
+    if newuser in member.values():
+        print("This user already exists, please choose a new one.")
+        return()
+    elif newuser or newpassword == "":
+        print("Please type something")
+        return()
+    elif newpassword.isalnum() == False:
+        print("Password should contain atleast one number")
+        return()
+    elif len(newpassword) < 8:
+        print("Password should contains atleast 8 letters .")
+        return()
+    elif tempPass == newpassword:
+        print("Password should contain a captial letter.")
+        return()
 
-# Asks the user what they what to do or if they wish to view their passwords and the user can also exit
-def loggedin():
-    while True:
-        global choice
-        choice = input("If you wish to save a new password, type 'p'. If you want to view your passwords type 'v'. Lastly if you are done type 'e'. \n")
-        if choice == "p":
-            enter_password()
-        elif choice == "v":
-            print("The app names are: {}. The user for them are: {} The password for them are: {}." .format(app, userentry, passentry))
-        elif choice == "e":
-            exit()
-        else:
-            print("Make sure to only type p")
 
-# A loop that allows the user to enter their passwords
-def enter_password():
-    while True:
-        global appuser
-        global appname
-        global appPass
-        while True: 
-            appname = input("Enter the apps name you wish to save, if you are finished type 'f': \n")
-            if appname == "":
-              print("Please type something")
-            elif appname ==  "f":
-                loggedin()
-            else:
-                app.append(appname)
-                break
-        while True:
-            appuser = input("Enter the user for the app you wish to save, and press 'f' if you are done: \n")
-            if appuser == "":
-              print("Please type something")
-            else:
-                userentry.append(appuser)
-                break
-        while True:
-            appPass = input("Enter your password you wish to save, and press 'f' if you are done: \n")
-            if appPass == "":
-                print("Please type something")
-            else:
-                passentry.append(appPass)
-                print("Password saved, enter any more passwords you wish." )    
-                enter_password()
-                
-# INTRODUCTION
+
+    else:
+        member["password"] = newpassword
+        member["user"] = newuser
+        print("Account was created!")
+        return() 
+  
+        
+# Checks to make sure the existing username and password is correct
+def existingacc(e_username, e_password, i):
+    if e_username or e_password == "":
+        print("Enter a valid user/password")
+        return()
+    elif e_username in member["user"]: 
+        print("This username is already in use, choose another one please.")
+        return()
+    elif e_password in member['password']:
+            print("Access granted {}!" .format(name))
+            i += 1
+            return()
+    else:
+        print("Wrong password")       
+
+# Checks to see if what the user entered for their app account details is correct
+def savepass(appName, appUser, appPass):
+    if appName or appUser or appPass == "":
+        print("Please type something")
+        return()
+    else:
+        app.append(appName)
+        userentry.append(appUser)
+        passentry.append(appPass)
+        return()        
+
+# Main Routine
 # Informs the user about the program
 print("Hello there! This program is designed for you to store your passwords and users.\
 This is only for people who are 13 or older.")
-question()
+
+# Loop for asking the user what their name and age is
+while True:
+    try:
+        name = input("What is your name?\n")
+        age = float(input("How old are you?\n").strip())
+        check(name, age)
+        break
+    except ValueError: 
+        print("Please enter a number/name")
+
+# Loop to see if the user wishs to login or create an account     
+while True:       
+    login = input("{}, do you have an existing account or do you want to create a new one? If it is a new one type 'n', if an existing account type 'e'.\n" .format(name))
+    login = login.lower()
+    if login == "":
+        print("Please type either e or n.")
+    else:
+        break
+
+while True:
+    if login == "n":
+        newuser = input("Enter a username: \n")
+        newpassword = input("Enter a password. The password MUST have 7 letters, 1 captial letter and a number: \n").strip()
+        newacc(newuser, newpassword)
+        break
+
+while True:
+    if login == "e":
+        e_username = input("Enter your username: \n")
+        e_password = input("Please enter your password: \n") 
+        existingacc(e_username, e_password, )
+        break
+
+# Asks the user what they want to do
+while True:
+    choice = input("If you wish to save a new password, type 'p'. If you want to view your passwords type 'v'. Lastly if you are done type 'e'. \n")
+    if choice == "":
+        print("Please only type either v, e or p.")
+    else:
+        break
+if choice == "p":
+    while True:
+        appName = input("Enter the app name you wish to save, whenever you are finished inputting your app account details type 'f': \n")
+        appUser = input("Enter the username for the app: \n")
+        appPass = input("Enter your password : \n")
+        savepass(appName, appUser, appPass)
+        break
+elif choice == "v":
+        print("The app names are: {}. The user for them are: {} The password for them are: {}." .format(app, userentry, passentry))
+elif choice == "e":
+    exit()
+else:
+    print("Make sure to only type p, v or e. ")
